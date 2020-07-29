@@ -13,8 +13,10 @@ import java.util.Scanner;
 public class UserInterface {
 
     Scanner scanner = new Scanner(System.in);
-    int cols;
+    int cols, r;
     Plane plane;
+    String xCols;
+
     public void enterNames() {
 
         System.out.println("Ingrese la cantidad de filas:");
@@ -29,13 +31,11 @@ public class UserInterface {
         System.out.println();
         System.out.println("Este es el mapa del avion:");
         System.out.println(plane.toString());
-        
 
     }
 
     public void menu() {
         while (true) {
-            System.out.println();
             System.out.println("¿Que deseas hacer?");
             System.out.println("1. Ingresar pasajero");
             System.out.println("2. Consultar asiento");
@@ -53,11 +53,19 @@ public class UserInterface {
                     System.out.print("Ingrese el apellido del pasajero: ");
                     String lastname = scanner.nextLine();
                     Passenger passenger = new Passenger(name, lastname);
+                    //--------------------------------
                     System.out.print("Ingrese la fila del asiento: ");
                     int rowsPassenger = Integer.valueOf(scanner.nextLine());
                     System.out.print("Ingrese la columna del asiento: ");
                     String colsPassenger = scanner.nextLine();
                     Seat seat = new Seat(rowsPassenger, colsPassenger);
+                    //---------------------------------
+                    System.out.println();
+                    System.out.println("¡Pasajero ingresado!");
+                    //----------------------------------
+                    xCols = colsPassenger;
+                    r = rowsPassenger;
+                    System.out.println(planeMapOccupied());
 
                     break;
                 }
@@ -83,11 +91,37 @@ public class UserInterface {
                     } else {
                         System.out.println("El pasajero no se encuentra en el avion.");
                     }
+
                     break;
                 }
 
             }
         }
+    }
+
+    public String planeMapOccupied() {
+        char XCols = xCols.charAt(0);
+        char c = 0;
+        int i;
+        for (i = 0; i < this.cols; i++) {
+            c = (char) ('A' + i);
+        }
+        String s = "";
+        for (Seat seat : plane.getPlaneP()) {
+            if (seat.getCol().equals("A")) {
+                s = s + (seat.getRow() + " ");
+            }
+            if ((seat.getCol().equals(XCols + "")) || (seat.getCol().equals(c + ""))) {
+                s = s + ("X" + "\n");
+            } else {
+                s = s + (seat.getCol() + " ");
+            }
+            if (i == r) {
+                s = s + (c + " ");
+            }
+
+        }
+        return s;
     }
 
 }
