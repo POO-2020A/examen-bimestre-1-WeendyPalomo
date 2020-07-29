@@ -29,7 +29,7 @@ public class UserInterface {
         System.out.println();
         System.out.println("Este es el mapa del avion:");
         System.out.println(plane.toString());
-        String aux =scanner.nextLine();
+        
 
     }
 
